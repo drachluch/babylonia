@@ -6,6 +6,8 @@ var largeur = 850;
 var svgElmt = createSVG("main", largeur, hauteur, "Fond du plateau de Babylonia.");
 var defs = createDefs();
 defs.appendChild(createHexagon("hex", r));
+defs.appendChild(createPriestToken("priest", r));
+defs.appendChild(createMerchantToken("merchant", r));
 svgElmt.appendChild(defs);
 
 
@@ -13,7 +15,8 @@ svgElmt.appendChild(defs);
 var x0 = 2*r;
 var y0 = r3;
 
-function addHex(x, y, className) { svgElmt.appendChild(createUse(x0 + 1.5*x*r, y0 + y*r3 + x*.5*r3, "#hex", className)); }
+function addUse(x, y, id, className) { svgElmt.appendChild(createUse(x0 + 1.5*x*r, y0 + y*r3 + x*.5*r3, id, className)); }
+function addHex(x, y, className) { addUse(x, y, "#hex", className); }
 
 lands = [
 	{x: 0, ymin: 1, ymax: 9},
@@ -97,6 +100,9 @@ drawBoard(lands, "land");
 drawBoard(rivers, "river");
 drawBoard(zigurats, "zigurat");
 drawBoard(cities, "city");
+addUse(0, 1, "#priest", "whiteplayer");
+addUse(0, 2, "#merchant", "whiteplayer");
+
 
 svgElmt.style.display = "block";
 document.getElementById("jesus").appendChild(svgElmt);

@@ -7,3 +7,15 @@ body {
 .river   { fill: #008CE6; stroke: white; stroke-width: 1px; }
 .zigurat { fill: none;    stroke: blue;  stroke-width: 4px; }
 .city    { fill: none;    stroke: green; stroke-width: 4px; }
+
+.tokenoutercircle  { fill: white; stroke: none; }
+.tokenmiddlecircle { fill: white; stroke: black; stroke-width: 1px; }
+.tokeninnercircle  { fill: white; stroke: black; stroke-width: .5px; }
+.tokencentralpoint { fill: black; stroke: none; }
+
+.tokenouterrightstar { fill: black; stroke: none; }
+.tokennegrightstar   { fill: none;  stroke: white; stroke-width: .75px; }
+
+.tokenouteroddstar { fill: black; stroke: none; }
+.tokenwhiteoddstar { fill: white; stroke: none; }
+.tokeninneroddstar { fill: none;  stroke: black; stroke-width: .5px; }
