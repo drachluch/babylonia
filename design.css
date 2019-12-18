@@ -19,3 +19,7 @@ body {
 .tokenouteroddstar { fill: black; stroke: none; }
 .tokenwhiteoddstar { fill: white; stroke: none; }
 .tokeninneroddstar { fill: none;  stroke: black; stroke-width: .5px; }
+
+.tokenbodymerchant { fill: black; stroke: none; }
+.tokenhatmerchant { fill: black; stroke: white; stroke-width: .5px; }
+.tokenfrontiermerchant { fill: none; stroke: white; stroke-width: .5px; }

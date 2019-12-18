@@ -123,29 +123,58 @@ function createPriestToken(id, r) {
 	return g;
 }
 
-function createMerchantToken(id, r) {
 
-	var bottomh = r*.75;
-	var toph = -r*.5;
-
-
-
-	var outerr = r*.75;
-	var middler = r*.25;
-	var innerr = r*.15625;
-	var centralr = r*.0625;
-	var starr = r*(.6875);
-	var middler2 = middler/Math.sqrt(2);
+// arguments :
+// x1, x3, x5, x7, x9, y0, y2, y4, y6, y8, alpha0, alpha2, alpha6, alpha8, bezier
+function createMerchantToken(id, a) {
 
 	var outercircle = document.createElementNS(xmlns, "circle");
-	outercircle.setAttributeNS(null, "r", outerr);
+	outercircle.setAttributeNS(null, "r", a.rdisk);
 	outercircle.setAttributeNS(null, "x", 0);
 	outercircle.setAttributeNS(null, "y", 0);
 	outercircle.setAttributeNS(null, "class", "tokenoutercircle");
 
+	var path = "M " + (-a.x1) + " " + a.y0 + " ";
+	path += "A 1 " + a.alpha0 + " 0 1 0 " + a.x1 + " " + a.y0 + " ";
+	path += "Q " + a.x1 + " " + ((a.y2+a.y0)*.5+a.bezier) + " "  + ((a.x1+a.x3)*.5) + " " + ((a.y2+a.y0)*.5) + " ";
+	path += "T " + a.x3 + " " + a.y2 + " ";
+	path += "L " + a.x5 + " " + a.y4 + " ";
+	path += "L " + a.x5 + " " + a.y6 + " ";
+	path += "L " + (-a.x5) + " " + a.y6 + " ";
+	path += "L " + (-a.x5) + " " + a.y4 + " ";
+	path += "L " + (-a.x3) + " " + a.y2 + " ";
+	path += "Q " + (-a.x3) + " " + ((a.y2+a.y0)*.5-a.bezier) + " "  + (-(a.x1+a.x3)*.5) + " " + ((a.y2+a.y0)*.5) + " ";
+	path += "T " + (-a.x1) + " " + a.y0 + " ";
+	path += "Z";
+
+	var path_body = document.createElementNS(xmlns, "path");
+	path_body.setAttributeNS(null, "d", path);
+	path_body.setAttributeNS(null, "class", "tokenbodymerchant");
+
+	path = "M " + a.x7 + " " + a.y6 + " ";
+	path += "L " + a.x9 + " " + a.y8 + " ";
+	path += "A 1 " + a.alpha8 + " 0 1 0 " + (-a.x9) + " " + a.y8 + " ";
+	path += "L " + (-a.x7) + " " + a.y6 + " ";
+	path += "A 1 " + a.alpha6 + " 0 1 0 " + a.x7 + " " + a.y6 + " ";
+	path += "Z";
+
+	var path_hat = document.createElementNS(xmlns, "path");
+	path_hat.setAttributeNS(null, "d", path);
+	path_hat.setAttributeNS(null, "class", "tokenhatmerchant");
+
+	path = "M " + a.x3b + " " + a.y2 + " ";
+	path += "A 1 " + a.alpha2 + " 0 1 1 " + (-a.x3b) + " " + a.y2 + " ";
+
+	var path_frontier = document.createElementNS(xmlns, "path");
+	path_frontier.setAttributeNS(null, "d", path);
+	path_frontier.setAttributeNS(null, "class", "tokenfrontiermerchant");
+
 	var g = document.createElementNS(xmlns, "g");
 	g.setAttributeNS(null, "id", id);
 	g.appendChild(outercircle);
+	g.appendChild(path_body);
+	g.appendChild(path_hat);
+	g.appendChild(path_frontier);
 	return g;
 }
 

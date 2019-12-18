@@ -1,13 +1,57 @@
+function normalizeMerchantArgs(a, rdisk, rx, ry) {
+	var ve = (a.y0 + a.alpha0 * a.x1 + a.y8 - a.alpha8 * a.x9) / 2; // vertical_error
+	var vm = 2 * ry / (a.y0 + a.alpha0 * a.x1 - a.y8 + a.alpha8 * a.x9); // vertical_multiplier
+	var hm = rx / a.x3; // horizontal_multiplier
+	return {
+		rdisk: rdisk,
+		x1: a.x1 * hm,
+		x3: a.x3 * hm,
+		x3b: a.x3b * hm,
+		x5: a.x5 * hm,
+		x7: a.x7 * hm,
+		x9: a.x9 * hm,
+		y0: (a.y0 - ve) * vm,
+		y2: (a.y2 - ve) * vm,
+		y4: (a.y4 - ve) * vm,
+		y6: (a.y6 - ve) * vm,
+		y8: (a.y8 - ve) * vm,
+		alpha0: a.alpha0,
+		alpha2: a.alpha2,
+		alpha6: a.alpha6,
+		alpha8: a.alpha8,
+		bezier: a.bezier * vm
+	};
+}
 
 var r = 30;
 var r3 = r * Math.sqrt(3);
 var hauteur = 700;
 var largeur = 850;
+
+var merchantArgs = normalizeMerchantArgs({
+	x1: .23,
+	x3: .475,
+	x3b: .46,
+	x5: .23,
+	x7: .325,
+	x9: .25,
+	y0: .5,
+	y2: -.115,
+	y4: -.19,
+	y6: -.325,
+	y8: -.375,
+	alpha0: .325,
+	alpha2: .325,
+	alpha6: .20,
+	alpha8: .15,
+	bezier: .25
+}, r*.75, r*.45, r*.6);
+
 var svgElmt = createSVG("main", largeur, hauteur, "Fond du plateau de Babylonia.");
 var defs = createDefs();
 defs.appendChild(createHexagon("hex", r));
 defs.appendChild(createPriestToken("priest", r));
-defs.appendChild(createMerchantToken("merchant", r));
+defs.appendChild(createMerchantToken("merchant", merchantArgs));
 svgElmt.appendChild(defs);
 
 
