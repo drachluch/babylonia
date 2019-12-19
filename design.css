@@ -21,8 +21,8 @@ body {
 .tokeninneroddstar { fill: none;  stroke: black; stroke-width: .5px; }
 
 .tokenbodymerchant { fill: black; stroke: none; }
-.tokenhatmerchant { fill: black; stroke: white; stroke-width: .5px; }
-.tokenfrontiermerchant { fill: none; stroke: white; stroke-width: .5px; }
+.tokenhatmerchant { fill: black; stroke-width: .5px; }
+.tokenfrontiermerchant { fill: none; stroke-width: .5px; }
 
 .whiteplayer { fill: white; stroke: white; }
 .yellowplayer { fill: yellow; stroke: yellow; }

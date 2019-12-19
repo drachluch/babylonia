@@ -129,7 +129,7 @@ function createPriest(id, r) {
 	return g;
 }
 
-function createPriestToken(id, r) {
+function createPriestToken(id) {
 	var g = document.createElementNS(xmlns, "g");
 	g.setAttributeNS(null, "id", id);
 	g.appendChild(createUse(0, 0, "#empty", ""));
@@ -137,15 +137,17 @@ function createPriestToken(id, r) {
 	return g;
 }
 
+function createMerchantToken(id) {
+	var g = document.createElementNS(xmlns, "g");
+	g.setAttributeNS(null, "id", id);
+	g.appendChild(createUse(0, 0, "#empty", ""));
+	g.appendChild(createUse(0, 0, "#merchant", ""));
+	return g;
+}
+
 // arguments :
 // x1, x3, x5, x7, x9, y0, y2, y4, y6, y8, alpha0, alpha2, alpha6, alpha8, bezier
-function createMerchantToken(id, a) {
-
-	var outercircle = document.createElementNS(xmlns, "circle");
-	outercircle.setAttributeNS(null, "r", a.rdisk);
-	outercircle.setAttributeNS(null, "x", 0);
-	outercircle.setAttributeNS(null, "y", 0);
-	outercircle.setAttributeNS(null, "class", "tokenoutercircle");
+function createMerchant(id, a) {
 
 	var path = "M " + (-a.x1) + " " + a.y0 + " ";
 	path += "A 1 " + a.alpha0 + " 0 1 0 " + a.x1 + " " + a.y0 + " ";
@@ -184,7 +186,6 @@ function createMerchantToken(id, a) {
 
 	var g = document.createElementNS(xmlns, "g");
 	g.setAttributeNS(null, "id", id);
-	g.appendChild(outercircle);
 	g.appendChild(path_body);
 	g.appendChild(path_hat);
 	g.appendChild(path_frontier);

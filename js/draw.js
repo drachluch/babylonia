@@ -1,9 +1,8 @@
-function normalizeMerchantArgs(a, rdisk, rx, ry) {
+function normalizeMerchantArgs(a, rx, ry) {
 	var ve = (a.y0 + a.alpha0 * a.x1 + a.y8 - a.alpha8 * a.x9) / 2; // vertical_error
 	var vm = 2 * ry / (a.y0 + a.alpha0 * a.x1 - a.y8 + a.alpha8 * a.x9); // vertical_multiplier
 	var hm = rx / a.x3; // horizontal_multiplier
 	return {
-		rdisk: rdisk,
 		x1: a.x1 * hm,
 		x3: a.x3 * hm,
 		x3b: a.x3b * hm,
@@ -47,16 +46,16 @@ var merchantArgs = normalizeMerchantArgs({
 	alpha6: .20,
 	alpha8: .15,
 	bezier: .25
-}, r*.75, r*.45, r*.6);
+}, r*.45, r*.6);
 
 var svgElmt = createSVG("main", largeur, hauteur, "Fond du plateau de Babylonia.");
 var defs = createDefs();
 defs.appendChild(createHexagon("hex", r));
 defs.appendChild(createEmptyToken("empty", r));
 defs.appendChild(createPriest("priest", r));
-defs.appendChild(createPriestToken("priestToken", r));
-//defs.appendChild(createPriestToken("priest", r));
-defs.appendChild(createMerchantToken("merchant", merchantArgs));
+defs.appendChild(createPriestToken("priestToken"));
+defs.appendChild(createMerchant("merchant", merchantArgs));
+defs.appendChild(createMerchantToken("merchantToken"));
 svgElmt.appendChild(defs);
 
 var grid = document.createElementNS(xmlns, "g");
@@ -160,7 +159,13 @@ drawBoard(cities, "city");
 addPriestToken(0, 1, "whiteplayer");
 addPriestToken(1, 0, "cyanplayer");
 addPriestToken(1, 2, "yellowplayer");
-addUse(tokens, 0, 2, "#merchant", "whiteplayer");
+addUse(tokens, 0, 2, "#merchantToken", "whiteplayer");
+addUse(tokens, 0, 4, "#merchantToken", "yellowplayer");
+addUse(tokens, 3, 1, "#merchantToken", "cyanplayer");
+addUse(tokens, 2, 0, "#empty", "cyanplayer");
+addUse(tokens, 2, 1, "#empty", "yellowplayer");
+addUse(tokens, 2, 2, "#empty", "whiteplayer");
+
 
 
 svgElmt.style.display = "block";
