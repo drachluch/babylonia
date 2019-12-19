@@ -1,6 +1,15 @@
 var xmlns = "http://www.w3.org/2000/svg";
 var d = 1;
 
+function createUse(x, y, href, className) {
+	var u = document.createElementNS(xmlns, "use");
+	u.setAttributeNS(null, "x", x);
+	u.setAttributeNS(null, "y", y);
+	u.setAttributeNS(null, "href", href);
+	u.setAttributeNS(null, "class", className);
+	return u;
+}
+
 function createSVG(id, largeur, hauteur, title) {
 	var svgElmt = document.createElementNS(xmlns, "svg");
 	svgElmt.setAttributeNS(null, "width",  largeur+2*d);
@@ -31,29 +40,27 @@ function createHexagon(id, r) {
 	];
 
 	var path_interne = document.createElementNS(xmlns, "path");
+	path_interne.setAttributeNS(null, "id", id);
 	path_interne.setAttributeNS(null, "d", "M" + pts_interne.join(" L") + " Z");
-
-	var g = document.createElementNS(xmlns, "g");
-	g.setAttributeNS(null, "id", id);
-
-	g.appendChild(path_interne);
-	return g;
+	return path_interne;
 }
 
-function createPriestToken(id, r) {
+function createEmptyToken(id, r) {
+	var outercircle = document.createElementNS(xmlns, "circle");
+	outercircle.setAttributeNS(null, "id", id);
+	outercircle.setAttributeNS(null, "r", r*.75);
+	outercircle.setAttributeNS(null, "x", 0);
+	outercircle.setAttributeNS(null, "y", 0);
+	outercircle.setAttributeNS(null, "class", "tokenoutercircle");
+	return outercircle;
+}
 
-	var outerr = r*.75;
+function createPriest(id, r) {
 	var middler = r*.25;
 	var innerr = r*.15625;
 	var centralr = r*.0625;
 	var starr = r*(.6875);
 	var middler2 = middler/Math.sqrt(2);
-
-	var outercircle = document.createElementNS(xmlns, "circle");
-	outercircle.setAttributeNS(null, "r", outerr);
-	outercircle.setAttributeNS(null, "x", 0);
-	outercircle.setAttributeNS(null, "y", 0);
-	outercircle.setAttributeNS(null, "class", "tokenoutercircle");
 
 	var middlecircle = document.createElementNS(xmlns, "circle");
 	middlecircle.setAttributeNS(null, "r", middler);
@@ -111,7 +118,6 @@ function createPriestToken(id, r) {
 
 	var g = document.createElementNS(xmlns, "g");
 	g.setAttributeNS(null, "id", id);
-	g.appendChild(outercircle);
 	g.appendChild(path_outeroddstar);
 	g.appendChild(path_whiteoddstar);
 	g.appendChild(path_inneroddstar);
@@ -123,6 +129,13 @@ function createPriestToken(id, r) {
 	return g;
 }
 
+function createPriestToken(id, r) {
+	var g = document.createElementNS(xmlns, "g");
+	g.setAttributeNS(null, "id", id);
+	g.appendChild(createUse(0, 0, "#empty", ""));
+	g.appendChild(createUse(0, 0, "#priest", ""));
+	return g;
+}
 
 // arguments :
 // x1, x3, x5, x7, x9, y0, y2, y4, y6, y8, alpha0, alpha2, alpha6, alpha8, bezier
@@ -178,11 +191,3 @@ function createMerchantToken(id, a) {
 	return g;
 }
 
-function createUse(x, y, href, className) {
-	var u = document.createElementNS(xmlns, "use");
-	u.setAttributeNS(null, "x", x);
-	u.setAttributeNS(null, "y", y);
-	u.setAttributeNS(null, "href", href);
-	u.setAttributeNS(null, "class", className);
-	return u;
-}
